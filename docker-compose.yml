@@ -11,9 +11,28 @@ services:
     networks:
       sdi_apps:
         ipv4_address: 172.24.0.22
+  
+  postgis:
+    image: postgis/postgis:16-3.4
+    container_name: postgis
+    restart: always
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_DB: ensgdb
+      POSTGRES_USER: ensgadmin
+      POSTGRES_PASSWORD: ensgpassword
+      ALLOW_IP_RANGE: 0.0.0.0/0
+      FORCE_SSL: FALSE
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+    networks:
+      sdi_apps:
+        ipv4_address: 172.24.0.10
 
 volumes:
   portainer_data:
+  postgis_data:
 
 networks:
   sdi_apps:
